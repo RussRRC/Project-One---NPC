@@ -23,6 +23,7 @@ public class NPCver2 : MonoBehaviour
     public float moveSpeed;
     public bool debugMode;
 
+    private Rigidbody2D rigid;
     private Vector3 target;
     private Vector2 speed;
     private bool rightAngle;
@@ -60,11 +61,26 @@ public class NPCver2 : MonoBehaviour
                 }
         }
     }
+    private bool inFireRange
+    {
+        get
+        {
+            if(Vector3.Distance(transform.position, targetObject.transform.position) < firingRadius)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
     
 
     // Start is called before the first frame update
     void Start()
     {
+        rigid = GetComponent<Rigidbody2D>();
         startingPoint = transform.position;
         target = RandomPositionInWanderRadius();
         selfTransform = transform;
@@ -89,18 +105,19 @@ public class NPCver2 : MonoBehaviour
             {
                 RotateTowardsTargetDirection(targetObject.position);
                 //If facing player, move fast towards them
+                
                 selfTransform.Translate(speed.magnitude * new Vector2(0, moveSpeed) * Time.deltaTime * moveSpeed);
                 //Full chase mode, fully alerted state
                 alertSprite.color = Color.red;
-                fireProjectile();
             }
             else if(rightAngle == false)//if not facing towards the target object, will rotate towards it
             {
 
                 //Rotate toards the player
-                RotateTowardsTargetDirection(targetObject.position);
+                RotateTowardsTargetDirection(targetObject.position );
 
                 //Slowly move towards them
+                
                 selfTransform.Translate(speed.magnitude * new Vector2(0, moveSpeed / 4) * Time.deltaTime * moveSpeed);
                 //In light chase mode, semi-alerted state
                 alertSprite.color = Color.yellow;
@@ -129,10 +146,12 @@ public class NPCver2 : MonoBehaviour
             if(rightAngle == false)
             {
                 RotateTowardsTargetDirection(target);
+                
                 selfTransform.Translate(speed.magnitude * new Vector2(0, moveSpeed/4) * Time.deltaTime * moveSpeed);
             }
             else 
             {
+                
                 selfTransform.Translate(speed.magnitude * new Vector2(0, moveSpeed) * Time.deltaTime * moveSpeed);
             }
             RotateTowardsTargetDirection(target);
@@ -141,6 +160,11 @@ public class NPCver2 : MonoBehaviour
                 DrawCircle(target, 2, 64, Color.green);
             }
         }
+        if (inFireRange && chase)
+        {
+            fireProjectile();
+        }
+        
         //If NPC has reached within n units of the destination
         if (reachPoint)
         {
@@ -241,7 +265,7 @@ public class NPCver2 : MonoBehaviour
             _cycleTime = Time.time + _fireRate;
             if(_bullet != null)
             {
-                Rigidbody2D rb = Instantiate<Rigidbody2D>(_bullet, transform.position, transform.rotation);
+                Rigidbody2D rb = Instantiate<Rigidbody2D>(_bullet, transform.position + transform.up, transform.rotation);
                 rb.AddRelativeForce(Vector2.up * 50f, ForceMode2D.Impulse);
             }
             else
@@ -251,7 +275,10 @@ public class NPCver2 : MonoBehaviour
         }
     } 
 
-
+    void movement()
+    {
+        rigid.AddRelativeForce(speed.magnitude * new Vector2(0, 1));
+    }
 
     //Debug command in order to draw a circle dependant on what the radius of the circle is, and a center position
     public static void DrawCircle(Vector3 position, float radius, int segments, Color color)

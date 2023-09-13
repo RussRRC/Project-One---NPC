@@ -61,6 +61,6 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         rigid.AddRelativeForce(new Vector2(0, input.y) * speed);
-        rigid.AddTorque(-input.x);
+        rigid.AddTorque(-input.x * 10);
     }
 }

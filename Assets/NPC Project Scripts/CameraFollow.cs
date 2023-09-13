@@ -12,7 +12,7 @@ public class CameraFollow : MonoBehaviour
     void Start()
     {
         
-        initalOffset = new Vector3(0,0, -10);
+        initalOffset = new Vector3(0,0, -20);
     }
 
     void FixedUpdate()
