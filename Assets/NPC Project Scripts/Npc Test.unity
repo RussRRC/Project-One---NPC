@@ -312,7 +312,7 @@ MonoBehaviour:
   wanderRadius: 25
   detectionRadius: 15
   firingRadius: 10
-  moveSpeed: 2
+  moveSpeed: 1
   debugMode: 1
   _fireRate: 1
   _cycleTime: 0

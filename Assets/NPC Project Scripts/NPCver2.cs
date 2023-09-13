@@ -32,6 +32,7 @@ public class NPCver2 : MonoBehaviour
     [SerializeField] private float _cycleTime = 0.0f;
     [SerializeField] private Rigidbody2D _bullet;
     private Rigidbody2D Rigid;
+    private Rigidbody2D targetRigid;
 
     private bool reachPoint
     {
@@ -88,6 +89,7 @@ public class NPCver2 : MonoBehaviour
         //Debug to see what the position chosen is
         Debug.Log(target.ToString("F4"));
         Rigid = GetComponent<Rigidbody2D>();
+        targetRigid = targetObject.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -103,7 +105,7 @@ public class NPCver2 : MonoBehaviour
             rightAngle = facingDestination(targetObject.position);
             if(chase)
             {
-                RotateTowardsTargetDirection(targetObject.position);
+                RotateTowardsTargetDirection(targetObject.position + positionAdjuster());
                 //If facing player, move fast towards them
                 
                 selfTransform.Translate(speed.magnitude * new Vector2(0, moveSpeed) * Time.deltaTime * moveSpeed);
@@ -129,7 +131,7 @@ public class NPCver2 : MonoBehaviour
             }
             if (debugMode)
             {
-                DrawCircle(targetObject.transform.position, 2, 64, Color.green);
+                DrawCircle(targetObject.transform.position + positionAdjuster(), 2, 64, Color.green);
             }
             target = startingPoint;
         }
@@ -275,9 +277,11 @@ public class NPCver2 : MonoBehaviour
         }
     } 
 
-    void movement()
+    Vector3 positionAdjuster()
     {
-        rigid.AddRelativeForce(speed.magnitude * new Vector2(0, 1));
+        float xTravelled = targetRigid.velocity.x * targetObject.GetComponent<Player>().speed / targetRigid.mass * 0.03f;
+        float yTravelled = targetRigid.velocity.y * targetObject.GetComponent<Player>().speed / targetRigid.mass * 0.03f;
+        return new Vector3(xTravelled, yTravelled);
     }
 
     //Debug command in order to draw a circle dependant on what the radius of the circle is, and a center position
