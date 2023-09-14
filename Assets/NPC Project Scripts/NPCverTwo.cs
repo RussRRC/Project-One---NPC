@@ -110,7 +110,7 @@ public class NpcVerTwo : MonoBehaviour
         if(inRadius)//If player is within Radius
         {
             //set rightAngle to detect target object instead of random wander point
-            rightAngle = facingDestination(targetObject.position);
+            rightAngle = FacingDestination(targetObject.position);
 
             //If target Object is within FOV detection of the NPC
             if(chase)
@@ -167,7 +167,7 @@ public class NpcVerTwo : MonoBehaviour
             chase = false;
 
             //set the angle target to the random point/starting point
-            rightAngle = facingDestination(target);
+            rightAngle = FacingDestination(target);
 
             //if not facing towards the target point yet, move forwards slowly 
             if(rightAngle == false)
@@ -206,7 +206,7 @@ public class NpcVerTwo : MonoBehaviour
                 //fire the projectile
                 if (Vector3.Angle(targetObject.position - selfTransform.position, selfTransform.up) < 20f)
                 {
-                    fireProjectile();
+                    FireProjectile();
                 }
             }
         }
