@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPCver2 : MonoBehaviour
+public class NpcVerTwo : MonoBehaviour
 {
     enum state
     {
@@ -204,7 +204,10 @@ public class NPCver2 : MonoBehaviour
                 _cycleTime = Time.time + _fireRate;
 
                 //fire the projectile
-                fireProjectile();
+                if (Vector3.Angle(targetObject.position - selfTransform.position, selfTransform.up) < 20f)
+                {
+                    fireProjectile();
+                }
             }
         }
         
@@ -303,7 +306,10 @@ public class NPCver2 : MonoBehaviour
         }
         else
         {
-            Debug.LogError("The BULLET is null");
+            if (debugMode)
+            {
+                Debug.LogError("The BULLET is null");
+            }
         }
     }
  
