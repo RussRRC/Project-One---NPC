@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public Vector2 input;
-    public float speed = 25f;
+    public float force = 25f;
     public Vector2 moveDirectionWithSpeed;
 
     private Rigidbody2D rigid;
@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rigid.AddRelativeForce(new Vector2(0, input.y) * speed);
-        rigid.AddTorque(-input.x * 10);
+        rigid.AddRelativeForce(new Vector2(0, input.y) * force);
+        rigid.AddTorque(-input.x * 6);
     }
 }

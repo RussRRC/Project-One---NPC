@@ -25,13 +25,12 @@ public class NPCver2 : MonoBehaviour
 
     private Rigidbody2D rigid;
     private Vector3 target;
-    private Vector2 speed;
     private bool rightAngle;
     private bool chase;
     [SerializeField] private float _fireRate = 1.0f;
     [SerializeField] private float _cycleTime = 0.0f;
+    [SerializeField] private float shootForce = 50f;
     [SerializeField] private Rigidbody2D _bullet;
-    private Rigidbody2D Rigid;
     private Rigidbody2D targetRigid;
 
     private bool reachPoint
@@ -81,15 +80,25 @@ public class NPCver2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Set Rigidbody2D targets
         rigid = GetComponent<Rigidbody2D>();
-        startingPoint = transform.position;
-        target = RandomPositionInWanderRadius();
-        selfTransform = transform;
-        speed = new Vector2(1, 1);
-        //Debug to see what the position chosen is
-        Debug.Log(target.ToString("F4"));
-        Rigid = GetComponent<Rigidbody2D>();
         targetRigid = targetObject.GetComponent<Rigidbody2D>();
+
+        //Set origin point for NPC
+        startingPoint = transform.position;
+
+        //Set selfTransform transform variable
+        selfTransform = transform;
+
+        //Set first random point to wander to
+        target = RandomPositionInWanderRadius();
+
+        //Debug to see what the position chosen is
+        if (debugMode)
+        {
+            Debug.Log(target.ToString("F4"));
+        }
+
     }
 
     // Update is called once per frame
@@ -98,40 +107,54 @@ public class NPCver2 : MonoBehaviour
         
         //Checks to see if player is in radius of the NPC
         //Needs to be constantly checking
-
         if(inRadius)//If player is within Radius
         {
-            //
+            //set rightAngle to detect target object instead of random wander point
             rightAngle = facingDestination(targetObject.position);
+
+            //If target Object is within FOV detection of the NPC
             if(chase)
             {
+
+                //NPC now rotates towards the target object's percieved destination
                 RotateTowardsTargetDirection(targetObject.position + positionAdjuster());
-                //If facing player, move fast towards them
-                
-                selfTransform.Translate(speed.magnitude * new Vector2(0, moveSpeed) * Time.deltaTime * moveSpeed);
+               
+                //Since the NPC has entered chase mode, NPC moves 2x as fast
+                selfTransform.Translate(new Vector2(0, moveSpeed) * Time.deltaTime * moveSpeed);
+
                 //Full chase mode, fully alerted state
                 alertSprite.color = Color.red;
             }
             else if(rightAngle == false)//if not facing towards the target object, will rotate towards it
             {
 
-                //Rotate toards the player
+                //NPC rotates towards the target object's position
                 RotateTowardsTargetDirection(targetObject.position );
 
-                //Slowly move towards them
-                
-                selfTransform.Translate(speed.magnitude * new Vector2(0, moveSpeed / 4) * Time.deltaTime * moveSpeed);
+                //NPC moves slower than chase state as target Object has not entered FOV
+                selfTransform.Translate(new Vector2(0, moveSpeed / 4) * Time.deltaTime * moveSpeed);
+
                 //In light chase mode, semi-alerted state
                 alertSprite.color = Color.yellow;
                 
             }
-            else
+            else //Since the target object entered FOV, set chase to true to enter chase mode
             {
                 chase = true;
             }
+
+            //Debug Mode to view the target position the NPC is aiming for, target object position if non-chase mode, percieved destination if chase mode
             if (debugMode)
             {
-                DrawCircle(targetObject.transform.position + positionAdjuster(), 2, 64, Color.green);
+                if (!chase)
+                {
+                    DrawCircle(targetObject.transform.position, 2, 64, Color.green);
+                }
+                else
+                {
+                    DrawCircle(targetObject.transform.position + positionAdjuster(), 2, 64, Color.green);
+                }
+                
             }
             target = startingPoint;
         }
@@ -139,32 +162,50 @@ public class NPCver2 : MonoBehaviour
         {
             //Set sprite to unalerted state
             alertSprite.color = Color.white;
+
+            //Set chase mode to false in case the NPC was in chase mode before Target Object left detection radius
             chase = false;
 
             //set the angle target to the random point/starting point
             rightAngle = facingDestination(target);
 
-            //if not facing towards the target point yet, move forwards slowly while 
+            //if not facing towards the target point yet, move forwards slowly 
             if(rightAngle == false)
-            {
-                RotateTowardsTargetDirection(target);
-                
-                selfTransform.Translate(speed.magnitude * new Vector2(0, moveSpeed/4) * Time.deltaTime * moveSpeed);
+            {    
+                //NPC moves forwards slowly as it turns towards target
+                selfTransform.Translate(new Vector2(0, moveSpeed/4) * Time.deltaTime * moveSpeed);
             }
-            else 
+            else //If facing towards target point
             {
-                
-                selfTransform.Translate(speed.magnitude * new Vector2(0, moveSpeed) * Time.deltaTime * moveSpeed);
+                //NPC moves faster when facing towards target point
+                selfTransform.Translate(new Vector2(0, moveSpeed) * Time.deltaTime * moveSpeed);
             }
+
+            //NPC rotates towards the target wander position
             RotateTowardsTargetDirection(target);
+
+            //Debug Mode to view the target wander point
             if (debugMode)
             {
                 DrawCircle(target, 2, 64, Color.green);
             }
         }
+
+        //If target object is within the firing Radius of the NPC and the NPC is in chase mode, will fire a projectile
         if (inFireRange && chase)
         {
-            fireProjectile();
+            //Sets sprite's color to black
+            alertSprite.color = Color.black;
+
+            //Initiates fireProjectile
+            if (Time.time > _cycleTime)
+            {
+                //Update cycleTime to process next bullet firing time
+                _cycleTime = Time.time + _fireRate;
+
+                //fire the projectile
+                fireProjectile();
+            }
         }
         
         //If NPC has reached within n units of the destination
@@ -172,9 +213,13 @@ public class NPCver2 : MonoBehaviour
         {
             //Assign new random point to check
             target = RandomPositionInWanderRadius();
-            Debug.Log(target.ToString("F4"));
-        }
 
+            //Debug print target position in console
+            if (debugMode)
+            {
+                Debug.Log(target.ToString("F4"));
+            }
+        }
 
         //Debug circles to view wander area of NPC and the alert area of NPC
         if (debugMode)
@@ -186,10 +231,6 @@ public class NPCver2 : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        
-    }
     //Creates a new Vector3 within set Radius limit
     Vector3 RandomPositionInWanderRadius()
     {
@@ -201,7 +242,7 @@ public class NPCver2 : MonoBehaviour
         return Random.insideUnitCircle * wanderRadius + new Vector2(startingPoint.x, startingPoint.y);
     }
 
-    void RotateTowardsTargetDirection(Vector3 destination)
+    private void RotateTowardsTargetDirection(Vector3 destination)
     {
         Vector2 up = selfTransform.up;
 
@@ -227,26 +268,14 @@ public class NPCver2 : MonoBehaviour
 
     }
 
-    //Checks to see if player is within Detection Radius of the NPC
-    //Returns true if within detection radius
-    
-    /*
-     * Old check for player in Radius, moved to the variable with accessors
-    bool playerInRadius()
+    private void RapidRotationTowardsTargetDirection(Vector3 destination)
     {
-        if (Vector3.Distance(transform.position, targetObject.transform.position) < detectionRadius)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+
     }
-    */
+
 
     //Checks to see if the angle between the npc and target destination is less than 10.
-    bool facingDestination(Vector3 destination)
+    private bool facingDestination(Vector3 destination)
     {
         float angle = 5f;
         Debug.Log(Vector3.Angle(destination - selfTransform.position, selfTransform.up).ToString("F4"));
@@ -260,27 +289,32 @@ public class NPCver2 : MonoBehaviour
         }
     }
 
-    void fireProjectile()
+    /*Method: fireProjectile()
+     *Description: Spawns in projectile (_bullet)
+     *every n seconds with x amount of force
+     */
+    private void fireProjectile()
     {
-        if(Time.time > _cycleTime)
+        if(_bullet != null)
         {
-            _cycleTime = Time.time + _fireRate;
-            if(_bullet != null)
-            {
-                Rigidbody2D rb = Instantiate<Rigidbody2D>(_bullet, transform.position + transform.up, transform.rotation);
-                rb.AddRelativeForce(Vector2.up * 50f, ForceMode2D.Impulse);
-            }
-            else
-            {
-                Debug.LogError("The BULLET is null");
-            }
+           
+            Rigidbody2D rb = Instantiate<Rigidbody2D>(_bullet, transform.position + transform.up, transform.rotation);    
+            rb.AddRelativeForce(Vector2.up * shootForce, ForceMode2D.Impulse);
         }
-    } 
+        else
+        {
+            Debug.LogError("The BULLET is null");
+        }
+    }
+ 
 
-    Vector3 positionAdjuster()
+    //Returns the expected displacement of the targetObject in terms of movement.
+    private Vector3 positionAdjuster()
     {
-        float xTravelled = targetRigid.velocity.x * targetObject.GetComponent<Player>().speed / targetRigid.mass * 0.03f;
-        float yTravelled = targetRigid.velocity.y * targetObject.GetComponent<Player>().speed / targetRigid.mass * 0.03f;
+        float travelTime = 1f;
+        //Displacement = Initial Velocity * time + 1/2 * accelleration (force/mass) * time^2
+        float xTravelled = targetRigid.velocity.x * travelTime + 1/2 * targetObject.GetComponent<Player>().force / targetRigid.mass * Mathf.Pow(travelTime, 2);
+        float yTravelled = targetRigid.velocity.y * travelTime + 1/2 * targetObject.GetComponent<Player>().force / targetRigid.mass * Mathf.Pow(travelTime, 2);
         return new Vector3(xTravelled, yTravelled);
     }
 
