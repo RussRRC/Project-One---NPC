@@ -245,7 +245,7 @@ public class NpcVerTwo : MonoBehaviour
         return Random.insideUnitCircle * wanderRadius + new Vector2(startingPoint.x, startingPoint.y);
     }
 
-    private void RotateTowardsTargetDirection(Vector3 destination)
+    void RotateTowardsTargetDirection(Vector3 destination)
     {
         Vector2 up = selfTransform.up;
 
@@ -271,17 +271,14 @@ public class NpcVerTwo : MonoBehaviour
 
     }
 
-    private void RapidRotationTowardsTargetDirection(Vector3 destination)
-    {
-
-    }
-
-
     //Checks to see if the angle between the npc and target destination is less than 10.
-    private bool facingDestination(Vector3 destination)
+    bool FacingDestination(Vector3 destination)
     {
         float angle = 5f;
-        Debug.Log(Vector3.Angle(destination - selfTransform.position, selfTransform.up).ToString("F4"));
+        if (debugMode)
+        {
+            Debug.Log(Vector3.Angle(destination - selfTransform.position, selfTransform.up).ToString("F4"));
+        }
         if (Vector3.Angle(destination - selfTransform.position, selfTransform.up) < angle)
         {
             return true;
@@ -296,7 +293,7 @@ public class NpcVerTwo : MonoBehaviour
      *Description: Spawns in projectile (_bullet)
      *every n seconds with x amount of force
      */
-    private void fireProjectile()
+    void FireProjectile()
     {
         if(_bullet != null)
         {
@@ -315,7 +312,7 @@ public class NpcVerTwo : MonoBehaviour
  
 
     //Returns the expected displacement of the targetObject in terms of movement.
-    private Vector3 positionAdjuster()
+    Vector3 positionAdjuster()
     {
         float travelTime = 1f;
         //Displacement = Initial Velocity * time + 1/2 * accelleration (force/mass) * time^2
