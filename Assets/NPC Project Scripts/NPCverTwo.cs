@@ -80,6 +80,9 @@ public class NpcVerTwo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        state moveState;
+        moveState = state.wandering;
         //Set Rigidbody2D targets
         rigid = GetComponent<Rigidbody2D>();
         targetRigid = targetObject.GetComponent<Rigidbody2D>();
