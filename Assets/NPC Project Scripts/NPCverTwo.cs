@@ -12,8 +12,7 @@ public class NpcVerTwo : MonoBehaviour
         firing,
         returning,
     }
-    public Transform selfTransform;
-    public Transform targetObject;
+    [SerializeField] private Transform targetObject;
     public Vector3 startingPoint;
     public SpriteRenderer alertSprite;
 
@@ -22,6 +21,7 @@ public class NpcVerTwo : MonoBehaviour
     public float firingRadius;
     public float moveSpeed;
     public bool debugMode;
+    public bool rotationMode;
 
     private Rigidbody2D rigid;
     private Vector3 target;
@@ -37,7 +37,7 @@ public class NpcVerTwo : MonoBehaviour
     {
         get
         {
-            if (Vector3.Distance(selfTransform.position, target) < 0.5f)
+            if (Vector3.Distance(transform.position, target) < 0.5f)
             {
                 return true;
             }
@@ -80,18 +80,16 @@ public class NpcVerTwo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        targetObject = GameObject.Find("Player").transform;
         state moveState;
         moveState = state.wandering;
         //Set Rigidbody2D targets
         rigid = GetComponent<Rigidbody2D>();
         targetRigid = targetObject.GetComponent<Rigidbody2D>();
 
+
         //Set origin point for NPC
         startingPoint = transform.position;
-
-        //Set selfTransform transform variable
-        selfTransform = transform;
 
         //Set first random point to wander to
         target = RandomPositionInWanderRadius();
@@ -123,7 +121,7 @@ public class NpcVerTwo : MonoBehaviour
                 RotateTowardsTargetDirection(targetObject.position + positionAdjuster());
                
                 //Since the NPC has entered chase mode, NPC moves 2x as fast
-                selfTransform.Translate(new Vector2(0, moveSpeed) * Time.deltaTime * moveSpeed);
+                transform.Translate(new Vector2(0, moveSpeed) * Time.deltaTime * moveSpeed);
 
                 //Full chase mode, fully alerted state
                 alertSprite.color = Color.red;
@@ -135,7 +133,7 @@ public class NpcVerTwo : MonoBehaviour
                 RotateTowardsTargetDirection(targetObject.position );
 
                 //NPC moves slower than chase state as target Object has not entered FOV
-                selfTransform.Translate(new Vector2(0, moveSpeed / 4) * Time.deltaTime * moveSpeed);
+                transform.Translate(new Vector2(0, moveSpeed / 4) * Time.deltaTime * moveSpeed);
 
                 //In light chase mode, semi-alerted state
                 alertSprite.color = Color.yellow;
@@ -176,12 +174,12 @@ public class NpcVerTwo : MonoBehaviour
             if(rightAngle == false)
             {    
                 //NPC moves forwards slowly as it turns towards target
-                selfTransform.Translate(new Vector2(0, moveSpeed/4) * Time.deltaTime * moveSpeed);
+                transform.Translate(new Vector2(0, moveSpeed/4) * Time.deltaTime * moveSpeed);
             }
             else //If facing towards target point
             {
                 //NPC moves faster when facing towards target point
-                selfTransform.Translate(new Vector2(0, moveSpeed) * Time.deltaTime * moveSpeed);
+                transform.Translate(new Vector2(0, moveSpeed) * Time.deltaTime * moveSpeed);
             }
 
             //NPC rotates towards the target wander position
@@ -207,7 +205,7 @@ public class NpcVerTwo : MonoBehaviour
                 _cycleTime = Time.time + _fireRate;
 
                 //fire the projectile
-                if (Vector3.Angle(targetObject.position - selfTransform.position, selfTransform.up) < 20f)
+                if (Vector3.Angle(targetObject.position - transform.position, transform.up) < 20f)
                 {
                     FireProjectile();
                 }
@@ -250,14 +248,14 @@ public class NpcVerTwo : MonoBehaviour
 
     void RotateTowardsTargetDirection(Vector3 destination)
     {
-        Vector2 up = selfTransform.up;
+        Vector2 up = transform.up;
 
 
         //Finds the Vector3 between the NPC position and the target position needed for signedangle.
-        Vector3 movementAngle = destination - selfTransform.position;
+        Vector3 movementAngle = destination - transform.position;
 
         //Debug that draws from position to forward direction
-        Debug.DrawLine(selfTransform.position, selfTransform.position + (Vector3)up * 5f);
+        Debug.DrawLine(transform.position, transform.position + (Vector3)up * 5f);
 
         //Taes angle between forward direction and target position
         float signedAngle = Vector2.SignedAngle(up, movementAngle);
@@ -266,10 +264,17 @@ public class NpcVerTwo : MonoBehaviour
         //selfTransform.Rotate(new Vector3(0, 0, signedAngle));
 
         //Quaternion rotation in order to get a smooth turn towards target point.
-        Quaternion startRotation = selfTransform.rotation;
+        Quaternion startRotation = transform.rotation;
         Quaternion targetRotation = transform.rotation * Quaternion.Euler(0, 0, signedAngle);
 
-        transform.rotation = Quaternion.Slerp(startRotation, targetRotation, Time.deltaTime * moveSpeed);
+        if (rotationMode)
+        {
+            transform.rotation = Quaternion.RotateTowards(startRotation, targetRotation, moveSpeed);
+        }
+        else
+        {
+            transform.rotation = Quaternion.Slerp(startRotation, targetRotation, Time.deltaTime * moveSpeed);
+        }
         
 
     }
@@ -280,9 +285,9 @@ public class NpcVerTwo : MonoBehaviour
         float angle = 5f;
         if (debugMode)
         {
-            Debug.Log(Vector3.Angle(destination - selfTransform.position, selfTransform.up).ToString("F4"));
+            Debug.Log(Vector3.Angle(destination - transform.position, transform.up).ToString("F4"));
         }
-        if (Vector3.Angle(destination - selfTransform.position, selfTransform.up) < angle)
+        if (Vector3.Angle(destination - transform.position, transform.up) < angle)
         {
             return true;
         }
