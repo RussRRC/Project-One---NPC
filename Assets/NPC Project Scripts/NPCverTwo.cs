@@ -36,7 +36,7 @@ public class NpcVerTwo : MonoBehaviour
     {
         get
         {
-            if (Vector3.Distance(transform.position, target) < 0.5f)
+            if (Vector3.Distance(transform.position, target) < 1f)
             {
                 return true;
             }

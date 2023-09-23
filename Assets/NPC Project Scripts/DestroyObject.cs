@@ -16,8 +16,15 @@ public class DestroyObject : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        Destroy(this.gameObject);
+        if (collision.gameObject.name == "Player")
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            Destroy(gameObject, 2f);
+        }
     }
 }
