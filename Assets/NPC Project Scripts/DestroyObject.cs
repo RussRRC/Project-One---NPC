@@ -7,7 +7,8 @@ public class DestroyObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        //Will destroy itself after 8 seconds
+        Destroy(gameObject, 8f);
     }
 
     // Update is called once per frame
@@ -20,10 +21,12 @@ public class DestroyObject : MonoBehaviour
     {
         if (collision.gameObject.name == "Player")
         {
+            //Destroy if hits player
             Destroy(this.gameObject);
         }
         else
         {
+            //Destroy after 2 seconds if it collides with the stage
             Destroy(gameObject, 2f);
         }
     }
