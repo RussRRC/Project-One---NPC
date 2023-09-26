@@ -219,6 +219,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Earth elemental
       objectReference: {fileID: 0}
+    - target: {fileID: 977224465426460582, guid: 27f590a2c9c32174b9948317d0f66d03, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5882702273234929070, guid: 27f590a2c9c32174b9948317d0f66d03, type: 3}
       propertyPath: m_LocalPosition.x
       value: 36.4
@@ -441,11 +445,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1085419882637635324, guid: b03d65202da71c242b0779a95b796c53, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -18.9
+      value: -20.7
       objectReference: {fileID: 0}
     - target: {fileID: 1085419882637635324, guid: b03d65202da71c242b0779a95b796c53, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -17.8
+      value: -7.2
       objectReference: {fileID: 0}
     - target: {fileID: 1085419882637635324, guid: b03d65202da71c242b0779a95b796c53, type: 3}
       propertyPath: m_LocalPosition.z
@@ -486,6 +490,10 @@ PrefabInstance:
     - target: {fileID: 6850592023004537281, guid: b03d65202da71c242b0779a95b796c53, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354107552105673921, guid: b03d65202da71c242b0779a95b796c53, type: 3}
+      propertyPath: spawnRadius
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -852,7 +860,7 @@ Transform:
   m_GameObject: {fileID: 1003466699}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 62.7, y: -4.7, z: 0}
+  m_LocalPosition: {x: 56.9, y: -4.5, z: 0}
   m_LocalScale: {x: 3.034197, y: 71.57402, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2010,7 +2018,7 @@ Transform:
   m_GameObject: {fileID: 1463077890}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -44.3577, y: -4.4448, z: 0}
+  m_LocalPosition: {x: -39.5, y: -4.2, z: 0}
   m_LocalScale: {x: 3.034197, y: 71.57402, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2131,11 +2139,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4618856482152945744, guid: ea4fc971162d78343b3b278e5b35a613, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 24.8
+      value: 19.6
       objectReference: {fileID: 0}
     - target: {fileID: 4618856482152945744, guid: ea4fc971162d78343b3b278e5b35a613, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.8
+      value: -8.1
       objectReference: {fileID: 0}
     - target: {fileID: 4618856482152945744, guid: ea4fc971162d78343b3b278e5b35a613, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2201,7 +2209,7 @@ Transform:
   m_GameObject: {fileID: 1551860790}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.5, y: 30.1, z: 0}
+  m_LocalPosition: {x: 8.5, y: 11.5, z: 0}
   m_LocalScale: {x: 108.75259, y: 2.4845188, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2331,7 +2339,7 @@ Transform:
   m_GameObject: {fileID: 1670514699}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9, y: -39.3, z: 0}
+  m_LocalPosition: {x: 9.2, y: -21.7, z: 0}
   m_LocalScale: {x: 108.75259, y: 2.4845188, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2920,11 +2928,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 35.0794
+  orthographic size: 18.2
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
@@ -3090,15 +3098,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5908616416328747574, guid: 4114b2e2bddddef48b2d79231da13c52, type: 3}
       propertyPath: physicsMovement
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6567170777763113323, guid: 4114b2e2bddddef48b2d79231da13c52, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -20.8
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6567170777763113323, guid: 4114b2e2bddddef48b2d79231da13c52, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.7
+      value: -8.5
       objectReference: {fileID: 0}
     - target: {fileID: 6567170777763113323, guid: 4114b2e2bddddef48b2d79231da13c52, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3156,13 +3164,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4148969565370396689, guid: e752f6e3d0d70df4d95df8a3cbb8fb9e, type: 3}
+      propertyPath: force
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5090939448097233886, guid: e752f6e3d0d70df4d95df8a3cbb8fb9e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.7
+      value: -4.3
       objectReference: {fileID: 0}
     - target: {fileID: 5090939448097233886, guid: e752f6e3d0d70df4d95df8a3cbb8fb9e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -25.1
+      value: -18.4
       objectReference: {fileID: 0}
     - target: {fileID: 5090939448097233886, guid: e752f6e3d0d70df4d95df8a3cbb8fb9e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3195,6 +3207,18 @@ PrefabInstance:
     - target: {fileID: 5090939448097233886, guid: e752f6e3d0d70df4d95df8a3cbb8fb9e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5515325761759344679, guid: e752f6e3d0d70df4d95df8a3cbb8fb9e, type: 3}
+      propertyPath: m_Mass
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5515325761759344679, guid: e752f6e3d0d70df4d95df8a3cbb8fb9e, type: 3}
+      propertyPath: m_LinearDrag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5515325761759344679, guid: e752f6e3d0d70df4d95df8a3cbb8fb9e, type: 3}
+      propertyPath: m_GravityScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

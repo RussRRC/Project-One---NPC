@@ -98,15 +98,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85e2aa35424f390409d92e839d5913b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: 0
+  shoot: 0
   targetObject: {fileID: 0}
   startingPoint: {x: 0, y: 0, z: 0}
   alertSprite: {fileID: 1299150574924982575}
-  wanderRadius: 25
-  detectionRadius: 15
-  firingRadius: 10
+  wanderRadius: 10
+  detectionRadius: 7
+  firingRadius: 5
   moveSpeed: 1.5
-  debugMode: 0
-  rotationMode: 0
+  debugMode: 1
+  smoothRotation: 0
+  physicsMovement: 0
   _fireRate: 2
   _cycleTime: 0
   shootForce: 25

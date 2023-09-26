@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     public Vector2 input;
     public float force = 25f;
+    public float jumpAmount = 25f;
     public Vector2 moveDirectionWithSpeed;
 
     private Rigidbody2D rigid;
@@ -59,7 +60,17 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rigid.AddRelativeForce(new Vector2(0, input.y) * force);
-        rigid.AddTorque(-input.x * 6);
+        rigid.AddRelativeForce(new Vector2(input.x, 0) * force, ForceMode2D.Impulse);
+        if (Input.GetKeyDown(KeyCode.UpArrow)){
+            rigid.AddForce(Vector2.up * jumpAmount, ForceMode2D.Impulse);
+        }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.name == "Stage")
+        {
+            
+        }
     }
 }

@@ -253,7 +253,11 @@ public class NpcVerTwo : MonoBehaviour
         }
     }
 
-    //Creates a new Vector3 within set Radius limit
+   /*Method: RandomPositionInWanderRadius()
+    * Description: Returns a random Vector2(x,y)
+    * within the Unit circle that is multiplied by 
+    * the cap wanderRadius and its offset starting position
+    */
     Vector3 RandomPositionInWanderRadius()
     {
         //randomly generate a number within radius limit of NPC, and add it to NPC's current position
@@ -264,6 +268,15 @@ public class NpcVerTwo : MonoBehaviour
         return Random.insideUnitCircle * wanderRadius + new Vector2(startingPoint.x, startingPoint.y);
     }
 
+    /*Method: RotateTowardsTargetDirection()
+     * Description: Rotates the GameObject 
+     * so that it is facing towards its target
+     * 
+     * Two modes are implemented, by checking the
+     * smoothRotation boolean, you make the rotation
+     * less robotic and more natural. 
+     * *Technically never reaches a 0 angle*
+     */
     void RotateTowardsTargetDirection(Vector3 destination)
     {
         Vector2 up = transform.up;
@@ -299,7 +312,12 @@ public class NpcVerTwo : MonoBehaviour
 
     }
 
-    //Checks to see if the angle between the npc and target destination is less than 10.
+    /*Method: FacingDestination()
+     * Description: Checks to see if the angle between 
+     * the NPC and its target destination is less than 
+     * x.
+     * Returns true if it is, false if it isn't
+     */
     bool FacingDestination(Vector3 destination)
     {
         float angle = 5f;
@@ -335,7 +353,18 @@ public class NpcVerTwo : MonoBehaviour
         }
     }
  
-    //Moves the NPC forward faster or slower dependant on speed variable
+    /*Method: moveForward()
+     * Description: Moves the NPC forwards
+     * a set amount, x, that can be changed
+     * 
+     * There are two modes, one that moves the 
+     * NPC's Transform.position, whilst the other
+     * provides a force on the targets RigidBody2D
+     * 
+     * *Due to the nature of its rotations not being
+     * based on physics, physics movement is somewhat
+     * glitchy and a collision occurs*
+     */
     void moveForward(float speed)
     {
         if (!physicsMovement)
@@ -347,10 +376,14 @@ public class NpcVerTwo : MonoBehaviour
             GetComponent<Rigidbody2D>().AddRelativeForce(Vector3.up * speed);
         }
     }
-    //Returns the expected displacement of the targetObject in terms of movement.
+    /*Method: positionAdjuster()
+     * Description: Returns a Vector3
+     * that is the amount the the target will
+     * travel due to the forces acting on it
+     */
     Vector3 positionAdjuster()
     {
-        float travelTime = 1f;
+        float travelTime = 0.2f;
         //Displacement = Initial Velocity * time + 1/2 * accelleration (force/mass) * time^2
         float xTravelled = targetRigid.velocity.x * travelTime + 1/2 * targetObject.GetComponent<Player>().force / targetRigid.mass * Mathf.Pow(travelTime, 2);
         float yTravelled = targetRigid.velocity.y * travelTime + 1/2 * targetObject.GetComponent<Player>().force / targetRigid.mass * Mathf.Pow(travelTime, 2);
