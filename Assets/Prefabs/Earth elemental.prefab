@@ -101,7 +101,7 @@ MonoBehaviour:
   moveSpeed: 100
   _cycleTime: 0
   _fireRate: 2
-  detectionRadius: 10
+  detectionRadius: 25
   shootForce: 250
   debugMode: 1
   _bullet: {fileID: 9002232337911198370, guid: 71b386736eb40ee41941dbfaa1b35186, type: 3}
