@@ -22,7 +22,7 @@ public class DestroyObject : MonoBehaviour
         if (collision.gameObject.name == "Player")
         {
             //Destroy if hits player
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
         else
         {

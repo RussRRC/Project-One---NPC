@@ -11,6 +11,7 @@ public class NewBehaviourScript : MonoBehaviour
     [SerializeField] private int spawnRadius;
     [SerializeField] private float lifetime;
     [SerializeField] private float timer = 0;
+    [SerializeField] private int counter;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +22,7 @@ public class NewBehaviourScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        counter = 0;
         timer += Time.deltaTime;
         if(timer > spawnInterval)
         {
@@ -33,6 +35,14 @@ public class NewBehaviourScript : MonoBehaviour
             }
             timer = 0;
         }
+        for (int i = 0; i < army.Length; i++)
+        {
+            if (army[i] != null)
+            {
+                counter++;
+            }
+        }
+
     }
 
     Vector3 RandomPositionInWanderRadius()
