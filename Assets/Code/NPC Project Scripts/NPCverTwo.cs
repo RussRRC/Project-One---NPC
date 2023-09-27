@@ -383,10 +383,11 @@ public class NpcVerTwo : MonoBehaviour
      */
     Vector3 positionAdjuster()
     {
+        float speed = targetObject.GetComponent<PlayerMovement>().GetSpeed();
         float travelTime = 0.2f;
         //Displacement = Initial Velocity * time + 1/2 * accelleration (force/mass) * time^2
-        float xTravelled = targetRigid.velocity.x * travelTime + 1/2 * targetObject.GetComponent<Player>().force / targetRigid.mass * Mathf.Pow(travelTime, 2);
-        float yTravelled = targetRigid.velocity.y * travelTime + 1/2 * targetObject.GetComponent<Player>().force / targetRigid.mass * Mathf.Pow(travelTime, 2);
+        float xTravelled = targetRigid.velocity.x * travelTime + 1/2 * speed / targetRigid.mass * Mathf.Pow(travelTime, 2);
+        float yTravelled = targetRigid.velocity.y * travelTime + 1/2 * speed / targetRigid.mass * Mathf.Pow(travelTime, 2);
         return new Vector3(xTravelled, yTravelled);
     }
 
