@@ -1,73 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
+using System.Collections;
 public class ScriptToAnimate : MonoBehaviour
 {
-    public SpriteRenderer spriteRenderer;
-    public Sprite[] walk;
-    public Sprite[] idle;
-    public Sprite[] jump;
-    void Start()
-    {
-        StartCoroutine(Idle());
-    }
+    public Animator animator;
     void Update()
     {
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetKeyDown(KeyCode.I))
         {
-            StopAllCoroutines();
-            StartCoroutine(Jump());
+            animator.SetTrigger("Idle");
         }
-        if (Input.GetButtonDown("Horizontal"))
+        if (Input.GetKeyDown(KeyCode.K))
         {
-            StopAllCoroutines();
-            StartCoroutine(Walk());
+            animator.SetTrigger("Kick");
         }
-        else
+        if (Input.GetKeyDown(KeyCode.W))
         {
-            StopAllCoroutines();
-            StartCoroutine(Idle());
+            animator.SetTrigger("Walk");
         }
-    }
-    IEnumerator Idle()
-    {
-        int i;
-        i = 0;
-        while (i < idle.Length)
-        {
-            spriteRenderer.sprite = idle[i];
-            i++;
-            yield return new WaitForSeconds(0.2f);
-            yield return 0;
-
-        }
-        StartCoroutine(Idle());
-    }
-    IEnumerator Walk()
-    {
-        int i;
-        i = 0;
-        while (i < walk.Length)
-        {
-            spriteRenderer.sprite = walk[i];
-            i++;
-            yield return new WaitForSeconds(0.2f);
-            yield return 0;
-        }
-        StartCoroutine(Walk());
-    }
-    IEnumerator Jump()
-    {
-        int i;
-        i = 0;
-        while (i < jump.Length)
-        {
-            spriteRenderer.sprite = jump[i];
-            i++;
-            yield return new WaitForSeconds(0.2f);
-            yield return 0;
-        }
-        StartCoroutine(Jump());
     }
 }
