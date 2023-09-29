@@ -2285,7 +2285,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 18.2
+  orthographic size: 5.7
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
@@ -2323,7 +2323,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2009163026}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2bb0ff7bc12ef6048a86be7be15f1d22, type: 3}
   m_Name: 
@@ -2519,19 +2519,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 863012309854580681, guid: e752f6e3d0d70df4d95df8a3cbb8fb9e, type: 3}
       propertyPath: m_Size.x
-      value: 0.81
+      value: 0.80015653
       objectReference: {fileID: 0}
     - target: {fileID: 863012309854580681, guid: e752f6e3d0d70df4d95df8a3cbb8fb9e, type: 3}
       propertyPath: m_Size.y
-      value: 1.64
+      value: 1.5962117
       objectReference: {fileID: 0}
     - target: {fileID: 863012309854580681, guid: e752f6e3d0d70df4d95df8a3cbb8fb9e, type: 3}
       propertyPath: m_Offset.x
-      value: 0.43
+      value: 0.1248593
       objectReference: {fileID: 0}
     - target: {fileID: 863012309854580681, guid: e752f6e3d0d70df4d95df8a3cbb8fb9e, type: 3}
       propertyPath: m_Offset.y
-      value: 0.83
+      value: 0.008980006
       objectReference: {fileID: 0}
     - target: {fileID: 3112508264410998390, guid: e752f6e3d0d70df4d95df8a3cbb8fb9e, type: 3}
       propertyPath: m_Name
@@ -2539,11 +2539,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5090939448097233886, guid: e752f6e3d0d70df4d95df8a3cbb8fb9e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.858
+      value: -6.325
       objectReference: {fileID: 0}
     - target: {fileID: 5090939448097233886, guid: e752f6e3d0d70df4d95df8a3cbb8fb9e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -21.663
+      value: -21.609
       objectReference: {fileID: 0}
     - target: {fileID: 5090939448097233886, guid: e752f6e3d0d70df4d95df8a3cbb8fb9e, type: 3}
       propertyPath: m_LocalPosition.z

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -18,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private float wallJumpingCounter;
     private float wallJumpingDuration = 1f;
     private Vector2 wallJumpingPower = new Vector2(8f, 16f);
+    private Animator _anim;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -25,10 +27,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
 
+    private void Start()
+    {
+        _anim = GetComponentInChildren<Animator>();
+        if (_anim == null)
+        {
+            Debug.LogError("Animator is NULL!!");
+        }
+    }
     private void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
-
+        
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
@@ -46,6 +56,18 @@ public class PlayerMovement : MonoBehaviour
         {
             Flip();
         }
+
+        if (IsGrounded() && Input.GetAxisRaw("Horizontal") == 0)
+        {
+            _anim.SetBool("Idling", true);
+            _anim.SetBool("Running", false);
+        }
+        else if (IsGrounded())
+        {
+            _anim.SetBool("Idling", false);
+            _anim.SetBool("Running", true);
+        }
+
     }
 
     private void FixedUpdate()
