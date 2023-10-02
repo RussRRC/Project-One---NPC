@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isWallJumping;
     private float wallJumpingDirection;
-    private float wallJumpingTime = 0.2f;
+    private float wallJumpingTime = 0.5f;
     private float wallJumpingCounter;
     private float wallJumpingDuration = 0.3f;
     private Vector2 wallJumpingPower = new Vector2(8f, 16f);
@@ -56,22 +56,18 @@ public class PlayerMovement : MonoBehaviour
         {
             Flip();
         }
+
         if (!IsGrounded() && rb.velocity.y > 0)
         {
+            _anim.SetBool("WallSliding", false);
             _anim.SetBool("Falling", false);
             _anim.SetBool("Jumping", true);
             _anim.SetBool("Idling", false);
             _anim.SetBool("Running", false);
         }
-        else if (!IsGrounded())
-        {
-            _anim.SetBool("Falling", true);
-            _anim.SetBool("Jumping", false);
-            _anim.SetBool("Idling", false);
-            _anim.SetBool("Running", false);
-        }
         else if (IsGrounded() && Input.GetAxisRaw("Horizontal") == 0)
         {
+            _anim.SetBool("WallSliding", false);
             _anim.SetBool("Falling", false);
             _anim.SetBool("Jumping", false);
             _anim.SetBool("Idling", true);
@@ -79,11 +75,29 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (IsGrounded())
         {
+            _anim.SetBool("WallSliding", false);
             _anim.SetBool("Falling", false);
             _anim.SetBool("Jumping", false);
             _anim.SetBool("Idling", false);
             _anim.SetBool("Running", true);
 
+        }
+        else if (IsWalled())
+        {
+            _anim.SetBool("WallSliding", true);
+            _anim.SetBool("Falling", false);
+            _anim.SetBool("Jumping", false);
+            _anim.SetBool("Idling", false);
+            _anim.SetBool("Running", false);
+
+        }
+        else if (!IsGrounded())
+        {
+            _anim.SetBool("WallSliding", false);
+            _anim.SetBool("Falling", true);
+            _anim.SetBool("Jumping", false);
+            _anim.SetBool("Idling", false);
+            _anim.SetBool("Running", false);
         }
 
     }
