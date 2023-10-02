@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     private float wallJumpingDirection;
     private float wallJumpingTime = 0.2f;
     private float wallJumpingCounter;
-    private float wallJumpingDuration = 1f;
+    private float wallJumpingDuration = 0.3f;
     private Vector2 wallJumpingPower = new Vector2(8f, 16f);
     private Animator _anim;
 
@@ -56,16 +56,34 @@ public class PlayerMovement : MonoBehaviour
         {
             Flip();
         }
-
-        if (IsGrounded() && Input.GetAxisRaw("Horizontal") == 0)
+        if (!IsGrounded() && rb.velocity.y > 0)
         {
+            _anim.SetBool("Falling", false);
+            _anim.SetBool("Jumping", true);
+            _anim.SetBool("Idling", false);
+            _anim.SetBool("Running", false);
+        }
+        else if (!IsGrounded())
+        {
+            _anim.SetBool("Falling", true);
+            _anim.SetBool("Jumping", false);
+            _anim.SetBool("Idling", false);
+            _anim.SetBool("Running", false);
+        }
+        else if (IsGrounded() && Input.GetAxisRaw("Horizontal") == 0)
+        {
+            _anim.SetBool("Falling", false);
+            _anim.SetBool("Jumping", false);
             _anim.SetBool("Idling", true);
             _anim.SetBool("Running", false);
         }
         else if (IsGrounded())
         {
+            _anim.SetBool("Falling", false);
+            _anim.SetBool("Jumping", false);
             _anim.SetBool("Idling", false);
             _anim.SetBool("Running", true);
+
         }
 
     }
