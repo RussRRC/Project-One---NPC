@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     private float horizontal;
     private float speed = 8f;
-    private float jumpingPower = 16f;
+    private float jumpingPower = 14f;
     private bool isFacingRight = true;
 
     private bool isWallSliding;
@@ -15,9 +15,9 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isWallJumping;
     private float wallJumpingDirection;
-    private float wallJumpingTime = 0.5f;
+    private float wallJumpingTime = 0.2f;
     private float wallJumpingCounter;
-    private float wallJumpingDuration = 0.3f;
+    private float wallJumpingDuration = 0.9f;
     private Vector2 wallJumpingPower = new Vector2(8f, 16f);
     private Animator _anim;
 
@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
             _anim.SetBool("Idling", true);
             _anim.SetBool("Running", false);
         }
-        else if (IsGrounded())
+        else if (rb.velocity.y == 0 && rb.velocity.x != 0)
         {
             _anim.SetBool("WallSliding", false);
             _anim.SetBool("Falling", false);
@@ -91,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
             _anim.SetBool("Running", false);
 
         }
-        else if (!IsGrounded())
+        else if (rb.velocity.y < 0)
         {
             _anim.SetBool("WallSliding", false);
             _anim.SetBool("Falling", true);
