@@ -224,7 +224,7 @@ public class NpcVerTwo : MonoBehaviour
                 _cycleTime = Time.time + _fireRate;
 
                 //fire the projectile
-                if (Vector3.Angle(targetObject.position - transform.position, transform.up) < 20f)
+                if (Vector3.Angle(targetObject.position + positionAdjuster() - transform.position, transform.up) < 20f)
                 {
                     FireProjectile();
                 }

@@ -109,7 +109,7 @@ MonoBehaviour:
   firingRadius: 5
   moveSpeed: 1.5
   debugMode: 1
-  smoothRotation: 0
+  smoothRotation: 1
   physicsMovement: 0
   _fireRate: 2
   _cycleTime: 0

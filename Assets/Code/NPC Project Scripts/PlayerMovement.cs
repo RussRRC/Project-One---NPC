@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isWallJumping;
     private float wallJumpingDirection;
-    private float wallJumpingTime = 0.2f;
+    private float wallJumpingTime = 0.05f;
     private float wallJumpingCounter;
     private float wallJumpingDuration = 0.9f;
     private Vector2 wallJumpingPower = new Vector2(8f, 16f);
@@ -58,23 +58,23 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (!IsGrounded() && rb.velocity.y > 0)
-        {
+        {//Jumping
             _anim.SetBool("WallSliding", false);
             _anim.SetBool("Falling", false);
             _anim.SetBool("Jumping", true);
             _anim.SetBool("Idling", false);
             _anim.SetBool("Running", false);
         }
-        else if (IsGrounded() && Input.GetAxisRaw("Horizontal") == 0)
-        {
+        else if (rb.velocity.y == 0 && Input.GetAxisRaw("Horizontal") == 0)
+        {//Idling
             _anim.SetBool("WallSliding", false);
             _anim.SetBool("Falling", false);
             _anim.SetBool("Jumping", false);
             _anim.SetBool("Idling", true);
             _anim.SetBool("Running", false);
         }
-        else if (rb.velocity.y == 0 && rb.velocity.x != 0)
-        {
+        else if (rb.velocity.y == 0 && Input.GetAxisRaw("Horizontal") != 0)
+        {//Running
             _anim.SetBool("WallSliding", false);
             _anim.SetBool("Falling", false);
             _anim.SetBool("Jumping", false);
@@ -83,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
 
         }
         else if (IsWalled())
-        {
+        {//WallSliding
             _anim.SetBool("WallSliding", true);
             _anim.SetBool("Falling", false);
             _anim.SetBool("Jumping", false);
@@ -92,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
 
         }
         else if (rb.velocity.y < 0)
-        {
+        {//Falling
             _anim.SetBool("WallSliding", false);
             _anim.SetBool("Falling", true);
             _anim.SetBool("Jumping", false);
@@ -142,6 +142,9 @@ public class PlayerMovement : MonoBehaviour
             wallJumpingCounter = wallJumpingTime;
 
             CancelInvoke(nameof(StopWallJumping));
+        }else if (IsGrounded())
+        {
+            isWallJumping = false;
         }
         else
         {
