@@ -43,6 +43,7 @@ public class EarthElemental : MonoBehaviour
             {
                 _cycleTime = Time.time + _fireRate;
                 fireProjectile();
+                Destroy(gameObject);
             }
         }
         else if (currentState == Sense.noDetection)
@@ -104,7 +105,7 @@ public class EarthElemental : MonoBehaviour
         if(_bullet != null)
         {
 
-            Rigidbody2D rb = Instantiate<Rigidbody2D>(_bullet, transform.position + transform.up, transform.rotation);
+            Rigidbody2D rb = Instantiate<Rigidbody2D>(_bullet, transform.position, transform.rotation);
             rb.AddRelativeForce(Vector2.up * shootForce, ForceMode2D.Impulse);
         }
         else
