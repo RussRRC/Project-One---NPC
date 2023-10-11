@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+
         _anim = GetComponentInChildren<Animator>();
         if (_anim == null)
         {

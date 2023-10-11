@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: e3c7b7bf15a81a243bd5c1aa69121364
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Tetsuya Demo
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: e4eb53413529ef249b052da629c353eb, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
