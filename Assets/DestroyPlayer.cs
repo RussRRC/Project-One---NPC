@@ -19,7 +19,7 @@ public class DestroyPlayer : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.name == "BossFire(Clone)"){
+        if(collision.gameObject.tag == "bullet"){
             Destroy(this.gameObject);
         }
     }

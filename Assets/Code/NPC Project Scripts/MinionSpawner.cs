@@ -52,6 +52,6 @@ public class NewBehaviourScript : MonoBehaviour
 
         //Generates random point in a circle, then multiplies it by radius in order to get true length
         //then adds starting point in order to adjust for where the NPC is setup for movement.
-        return Random.insideUnitCircle * spawnRadius + new Vector2(transform.position.x, transform.position.y);
+        return Random.insideUnitCircle * (spawnRadius * new Vector2(1, 0.2f)) + new Vector2(transform.position.x, transform.position.y);
     }
 }

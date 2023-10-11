@@ -25,7 +25,7 @@ public class EarthElemental : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {        
-        targetObject = GameObject.Find("Player").transform;
+        targetObject = GameObject.FindWithTag("Player").transform;
 
     }
 

@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
     private int maxHealth = 20;
-    private int currentHealth;
+    public int currentHealth;
 
     public HealthBar healthBar;
+
+    public GameManagerScript gameManager;
+    private bool isDead;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,29 +20,46 @@ public class PlayerHealth : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (currentHealth <= 0 && !isDead)
+        {
+            isDead = true;
+            gameManager.GameOver();
+        }
     }
-    public void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Air Ball")
+        if (collision.gameObject.tag == "bullet")
         {
             TakeDamage(4);
+        }else if(collision.gameObject.tag == "wave")
+        {
+            TakeDamage(2);
+        }else if(collision.gameObject.tag == "Potion")
+        {
+            RecoverDamage(8);
         }
+
     }
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-
+        if(currentHealth < 0)
+        {
+            currentHealth = 0;
+        }
         healthBar.SetHealth(currentHealth);
+
     }
 
     public void RecoverDamage(int heal)
     {
         currentHealth += heal;
-
+        if(currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
         healthBar.SetHealth(currentHealth);
     }
 }
