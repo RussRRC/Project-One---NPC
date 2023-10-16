@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class Menu : MonoBehaviour
 {
     private AudioSource music;
+    public GameObject controlUI;
     private bool pause = false;
     public void OnPlayButton()
     {
@@ -29,5 +30,17 @@ public class Menu : MonoBehaviour
             music.UnPause();
         }
         pause = !pause;
+    }
+
+    public void OnControlsButton()
+    {
+        if (!controlUI.activeSelf)
+        {
+            controlUI.SetActive(true);
+        }
+        else
+        {
+            controlUI.SetActive(false);
+        }
     }
 }

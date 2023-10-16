@@ -33,12 +33,12 @@ public class PlayerHealth : MonoBehaviour
         if (collision.gameObject.tag == "bullet")
         {
             TakeDamage(4);
-        }else if(collision.gameObject.tag == "wave")
+        }else if(collision.gameObject.tag == "Wave")
         {
             TakeDamage(2);
         }else if(collision.gameObject.tag == "Potion")
         {
-            RecoverDamage(8);
+            RecoverDamage(6);
         }
 
     }

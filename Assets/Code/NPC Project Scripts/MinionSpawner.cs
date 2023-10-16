@@ -1,21 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class NewBehaviourScript : MonoBehaviour
 {
     [SerializeField] private GameObject[] army;
-    [SerializeField] private GameObject soldier;
+    [SerializeField] private GameObject soldier, secondarySoldier;
     [SerializeField] private int reinforcements;
     [SerializeField] private float spawnInterval;
     [SerializeField] private int spawnRadius;
     [SerializeField] private float lifetime;
-    [SerializeField] private float timer = 0;
+    [SerializeField] private float timer = 0, secondWave = 42, secondaryTimer = 0;
     [SerializeField] private int counter;
+    [SerializeField] private GameObject target;
     // Start is called before the first frame update
     void Start()
     {
         army = new GameObject[reinforcements];
+        target = GameObject.FindWithTag("Player");
 
     }
 
@@ -24,6 +27,7 @@ public class NewBehaviourScript : MonoBehaviour
     {
         counter = 0;
         timer += Time.deltaTime;
+        secondaryTimer += Time.deltaTime;
         if(timer > spawnInterval)
         {
             int spawnPosition = Random.Range(0, army.Length - 1);
@@ -34,6 +38,10 @@ public class NewBehaviourScript : MonoBehaviour
                 Destroy(go, Random.Range(lifetime/2, lifetime));
             }
             timer = 0;
+        }if(secondWave < 0 && secondaryTimer > spawnInterval * 3)
+        {
+            GameObject go = Instantiate(secondarySoldier, leftOrRightOfPlayer(), transform.rotation);
+            secondaryTimer = 0; 
         }
         for (int i = 0; i < army.Length; i++)
         {
@@ -42,10 +50,25 @@ public class NewBehaviourScript : MonoBehaviour
                 counter++;
             }
         }
-
+        if(secondWave > 0)
+        {
+            secondWave -= Time.deltaTime;
+        }
     }
 
-    Vector3 RandomPositionInWanderRadius()
+    private Vector3 leftOrRightOfPlayer()
+    {
+        int side = Random.Range(1, 3);
+        if (side == 1)
+        {
+            return target.transform.position + new Vector3(-30, 0);
+        }
+        else
+        {
+            return target.transform.position + new Vector3(30, 0);
+        }
+    }
+    private Vector3 RandomPositionInWanderRadius()
     {
         //randomly generate a number within radius limit of NPC, and add it to NPC's current position
         //radius is limited by starting point of NPC

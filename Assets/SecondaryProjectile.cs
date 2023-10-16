@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class AirBallSpawner : MonoBehaviour
+public class SecondaryProjectile : MonoBehaviour
 {
 
     [SerializeField] private Transform targetObject;
@@ -15,6 +15,7 @@ public class AirBallSpawner : MonoBehaviour
     public bool debugMode;
     public Rigidbody2D _bullet;
     private Sense currentState = Sense.noDetection;
+    public GameObject projectile;
 
     enum Sense
     {
@@ -24,9 +25,9 @@ public class AirBallSpawner : MonoBehaviour
     }
     // Start is called before the first frame update
     void Start()
-    {        
+    {
         targetObject = GameObject.FindWithTag("Player").transform;
-
+        _bullet = projectile.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -39,7 +40,7 @@ public class AirBallSpawner : MonoBehaviour
         }
         else if (currentState == Sense.attacking)
         {
-            if(Time.time > _cycleTime)
+            if (Time.time > _cycleTime)
             {
                 _cycleTime = Time.time + _fireRate;
                 fireProjectile();
@@ -61,7 +62,7 @@ public class AirBallSpawner : MonoBehaviour
         if (Vector3.Distance(transform.position, targetObject.position) < detectionRadius)
         {
             float angle = 5f;
-            if (Vector3.Angle(targetObject.position - transform.position, transform.up) < angle)
+            if (Vector3.Angle(targetObject.position - transform.position, transform.right) < angle)
             {
                 currentState = Sense.attacking;
             }
@@ -77,17 +78,17 @@ public class AirBallSpawner : MonoBehaviour
     }
     void RotateTowardsTargetDirection(Vector3 destination)
     {
-        Vector2 up = transform.up;
+        Vector2 right = transform.right;
 
 
         //Finds the Vector3 between the NPC position and the target position needed for signedangle.
         Vector3 movementAngle = destination - transform.position;
 
         //Debug that draws from position to forward direction
-        Debug.DrawLine(transform.position, transform.position + (Vector3)up * 5f);
+        Debug.DrawLine(transform.position, transform.position + (Vector3)right * 5f);
 
         //Taes angle between forward direction and target position
-        float signedAngle = Vector2.SignedAngle(up, movementAngle);
+        float signedAngle = Vector2.SignedAngle(right, movementAngle);
 
         //instant rotation
         //selfTransform.Rotate(new Vector3(0, 0, signedAngle));
@@ -102,11 +103,11 @@ public class AirBallSpawner : MonoBehaviour
 
     void fireProjectile()
     {
-        if(_bullet != null)
+        if (_bullet != null)
         {
 
             Rigidbody2D rb = Instantiate<Rigidbody2D>(_bullet, transform.position, transform.rotation);
-            rb.AddRelativeForce(Vector2.up * shootForce, ForceMode2D.Impulse);
+            rb.AddRelativeForce(Vector2.right * shootForce, ForceMode2D.Impulse);
         }
         else
         {

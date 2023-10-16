@@ -6,10 +6,14 @@ using UnityEngine.SceneManagement;
 public class GameManagerScript : MonoBehaviour
 {
 
-    public GameObject gameOverUI;
+    public GameObject gameOverUI, timer, player, boss, controlUI;
+
     public void GameOver()
     {
         gameOverUI.SetActive(true);
+        timer.SetActive(false);
+        player.SetActive(false);
+        boss.SetActive(false);
     }
 
     public void OnRestartButton()
@@ -26,4 +30,6 @@ public class GameManagerScript : MonoBehaviour
     {
         Application.Quit();
     }
+
+
 }
